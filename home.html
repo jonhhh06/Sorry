@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Phrase Loop Feed</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: linear-gradient(135deg, #1e1e2f, #3a3a5f);
+      color: #fff;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    .container {
+      width: 420px;
+      height: 500px;
+      background: rgba(0,0,0,0.4);
+      border-radius: 15px;
+      padding: 20px;
+      overflow: hidden;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+    }
+
+    h2 {
+      text-align: center;
+      margin-bottom: 15px;
+    }
+
+    .feed {
+      height: 420px;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .message {
+      background: rgba(255,255,255,0.1);
+      padding: 10px;
+      border-radius: 10px;
+      animation: fadeIn 0.4s ease;
+    }
+
+    .count {
+      color: #00ffcc;
+      font-weight: bold;
+      margin-right: 8px;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <h2>Phrase Loop</h2>
+    <div class="feed" id="feed"></div>
+  </div>
+
+  <script>
+    const phrase = "ANO LAGI IT PROBLEMA MAHAL";
+    const feed = document.getElementById("feed");
+
+    let counter = 1;
+
+    function addMessage() {
+      const messageDiv = document.createElement("div");
+      messageDiv.classList.add("message");
+
+      messageDiv.innerHTML = `
+        <span class="count">#${counter}</span>
+        ${phrase}
+      `;
+
+      feed.appendChild(messageDiv);
+
+      // Auto scroll
+      feed.scrollTop = feed.scrollHeight;
+
+      counter++;
+
+      // Limit messages
+      if (feed.children.length > 30) {
+        feed.removeChild(feed.firstChild);
+      }
+    }
+
+    setInterval(addMessage, 800);
+  </script>
+
+</body>
+</html>
